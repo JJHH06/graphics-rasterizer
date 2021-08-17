@@ -1,5 +1,5 @@
 #Modulo de funciones matemáticas 
-#Ejercicio 4
+#Ejercicio 5
 #José Javier Hurtarte 19707
 
 PI = 3.141592654
@@ -56,26 +56,26 @@ def det3x3(matA):
     total=(matA[0][0]*matA[1][1]*matA[2][2])+(matA[0][1]*matA[1][2]*matA[2][0])+(matA[0][2]*matA[1][0]*matA[2][1]) - (matA[0][1]*matA[1][0]*matA[2][2]) - (matA[0][0]*matA[1][2]*matA[2][1])- (matA[0][2]*matA[1][1]*matA[2][0])
     return total
 
-def det4x4(matA):
-    result =[]
+#Algoritmo de sarrus, supuestamente es eficiente
+def sarrus(matA,multiplier = 1):
+    extended =[]
     for n in matA:
-        result.append(n + n[:3])
-    
+        extended.append(n + n[:3])
     determinant = 0
-    countSum = 0
-    for x in range(len(matA[0])):
-        determinant += result[0][0+countSum]*result[1][1+countSum]*result[2][2+countSum]*result[3][3+countSum]
-        countSum +=1
-    countSum -= 1
+    mult =multiplier
+    for x in range(4):
+        determinant += mult*extended[0][0+x]*extended[1][1+x]*extended[2][2+x]*extended[3][3+x]
+        mult*=-1
     
-    for x in range(len(matA[0])):
-        determinant += -1*(result[0][0+countSum]*result[1][countSum-1]*result[2][countSum-2]*result[3][countSum-3])
-        countSum +=1
+    for x in range(3,7):
+        determinant += mult*(extended[0][0+x]*extended[1][x-1]*extended[2][x-2]*extended[3][x-3])
+        mult*=-1
     return determinant
-    
-         
-    
 
+def det4x4(A):
+    B=[[A[y][0],A[y][2],A[y][1],A[y][3]] for y in range(len(A))]
+    C =[[B[y][0],B[y][1],A[y][3],B[y][2]] for y in range(len(A))]
+    return sarrus(A) + sarrus(B, multiplier=-1) +sarrus(C)
 
 def T(A):
     result=[[0]*len(A[0]) for _ in range(len(A))]
@@ -92,12 +92,9 @@ def inv(A):
     mult = 1
     for m in range(len(A)):
         for n in range(len(A[0])):
-            tempMat = [[A[y][x] for x in range(len(A[0])) if x != n] for y in range(len(A)) if y != m]
-            print(tempMat)
-            result[m][n] = mult*det3x3(tempMat)/det
+            result[m][n] = mult*det3x3([[A[y][x] for x in range(len(A[0])) if x != n] for y in range(len(A)) if y != m])/det
             mult *= -1
         mult *= -1
         
     return result
             
-print(inv([[6,-7,-8,1],[2,3,5,4],[1,6,9,0],[4,-5,2,1]]))

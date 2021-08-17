@@ -1,5 +1,4 @@
-
-#Ejercicio 4, Librería de cargador de obj
+#Ejercicio 5, Librería de cargador de obj
 #Jose Hurtarte 19707
 #Basado en el programa de clase desarrollado por Ing. Carlos Alonso, ya que se hizo al mismo tiempo que el explicaba
 

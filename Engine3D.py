@@ -1,6 +1,5 @@
-
-#Ejercicio 4, programa principal
-#Flat Shading & Textures
+#Ejercicio 5, programa principal
+#Transformations
 #Jose Hurtarte 19707
 
 

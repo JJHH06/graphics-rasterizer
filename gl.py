@@ -1,4 +1,4 @@
-#Ejercicio 4, graphics library
+#Ejercicio 5, graphics library
 #Jose Hurtarte 19707
 #Graficos por computadora basado en lo escrito por Ing. Carlos Alonso
 
@@ -10,17 +10,14 @@
 #los regresa como tipos de variables de C o Java
 #from _typeshed import Self
 import struct
-import numpy as np
 from numpy import sin, cos, tan
 import GenericMath as gm
 from obj import Obj
 from collections import namedtuple
-import random #solo para crear colores al azar
 
 V2 = namedtuple('Point2', ['x', 'y'])
 V3 = namedtuple('Point3', ['x', 'y', 'z'])
 V4 = namedtuple('Point4', ['x', 'y', 'z', 'w'])
-
 
 
 def char(c):
@@ -455,8 +452,8 @@ class Renderer(object):
 
     def glViewMatrix(self, translate = V3(0,0,0), rotate = V3(0,0,0)):
         camMatrix = self.glCreateObjectMatrix(translate,V3(1,1,1),rotate)
-        print(camMatrix)
-        self.viewMatrix = np.linalg.inv(camMatrix).tolist()
+        
+        self.viewMatrix = gm.inv(camMatrix)
 
     def glLookAt(self, eye, camPosition = V3(0,0,0)):
         forward = gm.subtract(camPosition, eye)
@@ -468,12 +465,12 @@ class Renderer(object):
         up = gm.cross(forward, right)
         up = gm.normVec(up)
 
-        camMatrix = np.matrix([[right[0],up[0],forward[0],camPosition.x],
+        camMatrix = [[right[0],up[0],forward[0],camPosition.x],
                                [right[1],up[1],forward[1],camPosition.y],
                                [right[2],up[2],forward[2],camPosition.z],
-                               [0,0,0,1]])
+                               [0,0,0,1]]
 
-        self.viewMatrix = np.linalg.inv(camMatrix).tolist()
+        self.viewMatrix = gm.inv(camMatrix)
 
 
 
